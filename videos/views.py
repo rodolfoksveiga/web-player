@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 import requests
+import vimeo
 
 from .models import Video
 from .forms import VideoForm
@@ -12,10 +13,42 @@ def videos_view(request, *args, **kwargs):
     return render(request, 'video/videos.html', context)
 
 def play_video_view(request, id):
-    # requests.get('https://vimeo.com/api/oembed.json?url=' + obj.url)
+    client = vimeo.VimeoClient(
+        key='',
+        secret=''
+    )
+    vimeo_authorization_url = client.auth_url(
+        scope=['public', 'private'],
+        redirect='http://localhost:8000/videos/',
+        state='state'
+    )
+    try:
+        code = request.GET.get('code')
+        token, user, scop = client.exchange_code(
+            code,
+            'http://localhost:8000/videos/'
+        )
+        print(token)
+    except:
+        print('BAD!')
+    
+    # get video's iframe
+    # response = client.get('/videos/538327228')
+    # iframe = response.json().get('embed').get('html')
+
+    # update video's information
+    # client.patch(
+    #     '/videos/538327228',
+    #     data={
+    #         'name': 'NEW Test Video 1',
+    #         'description': 'NEW This is a test.'
+    #     }
+    # )
+
     obj = get_object_or_404(Video, id=id)
     context = {
-        'obj': obj
+        'obj': obj,
+        'auth': vimeo_authorization_url,
     }
     return render(request, 'video/play_video.html', context)
 
@@ -23,7 +56,7 @@ def create_video_view(request, *args, **kwargs):
     form = VideoForm(request.POST or None)
     if form.is_valid():
         form.save()
-        form = VideoForm() # change here to return to videos views
+        return redirect('../')
     context = {
         'form': form
     }
@@ -38,7 +71,7 @@ def update_video_view(request, id, *args, **kwargs):
     form = VideoForm(request.POST or None, initial=values, instance=obj)
     if form.is_valid():
         form.save()
-        form = VideoForm() # change here to return to videos views
+        return redirect('../')
     context = {
         'form': form
     }
@@ -53,4 +86,3 @@ def delete_video_view(request, id, *args, **kwargs):
         'obj': obj
     }
     return render(request, 'video/delete_video.html', context)
-

@@ -4,6 +4,11 @@
 
 {% block content %}
     <h2>Play Video</h2>
+    <a href='{{ auth }}'>Vimeo Authentication</a>
+    <br>
+    <br>
+    <br>
+    <br>
     <a href={{ obj.url }}>{{ obj.title }}</a>
     <br>
     {% video obj.url %}
