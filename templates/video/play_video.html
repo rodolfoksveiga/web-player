@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load embed_video_tags %}
+
+{% block content %}
+    <h2>Play Video</h2>
+    <a href={{ obj.url }}>{{ obj.title }}</a>
+    <br>
+    {% video obj.url %}
+    <br>
+    <a href='update/'>Update video</a> - <a href='delete/'>Delete video</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Videos List</h1>
+    <ul>
+        {% for item in obj_list %}
+            <li>{{ item.id }}. <a href='{{ item.id }}'>{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
