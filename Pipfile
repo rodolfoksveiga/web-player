@@ -9,6 +9,9 @@ django-embed-video = "*"
 gunicorn = "*"
 pyvimeo = "*"
 django-analytical = "*"
+pandas = "*"
+matplotlib = "*"
+plotly = "*"
 
 [dev-packages]
 

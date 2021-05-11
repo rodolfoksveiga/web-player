@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Matomo</h1>
+<form method="POST">
+  {% csrf_token %}
+  <input type="text" placeholder="Date" name="date" />
+  <button type="submit">Plot</button>
+</form>
+<h2>Fetch Image from Matomo</h2>
+<h3>Browser Usage (Previous 30 Days)</h3>
+<img src="{{image}}" />
+<h2>Fetch Data from Matomo</h2>
+<h3>Number of Unique Visitors per Day</h3>
+<div>{{graph|safe}}</div>
+<br />
+<pre>{{data|pprint}}</pre>
+<h2>Fetch Data from Django Postgres</h2>
+<h2>Merge and Plot Data from Django Postgres + Matomo</h2>
+{% endblock %}
