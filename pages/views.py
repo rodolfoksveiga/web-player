@@ -9,18 +9,24 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+from piwikapi.analytics import PiwikAnalytics
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 
 from secret_keys import MATOMO_TOKEN
 
 
-def get_data(date):
-    url = 'https://collect.mayflower.live/index.php?module=API&method=VisitTime.getVisitInformationPerLocalTime&idSite=2&date=' + \
-        date + '&period=day&format=json&filter_limit=24&token_auth=' + MATOMO_TOKEN
-    data = requests.get(url).text
-    data = json.loads(data)
-    return data
+def get_data(method, date):
+    pa = PiwikAnalytics()
+    pa.set_api_url('https://collect.mayflower.live/index.php')
+    pa.set_id_site(2)
+    pa.set_parameter('token_auth', MATOMO_TOKEN)
+    pa.set_format('json')
+    pa.set_method(method)
+    pa.set_period('day')
+    pa.set_date(date)
+    return json.loads(pa.send_request())
 
 
 def home_view(request):
@@ -73,9 +79,10 @@ def logout_view(request):
 @user_passes_test(lambda user: user.is_superuser)
 def matomo_view(request, *args, **kwargs):
     if request.method == 'POST':
+        method = request.POST.get('method')
         date = request.POST.get('date')
         date = str(date)
-        data = get_data(date)
+        data = get_data(method, date)
         df = pd.json_normalize(data)[['nb_uniq_visitors', 'segment']]
         df.segment = pd.to_numeric(
             df.segment.str.replace(r'visitLocalHour==', ''))

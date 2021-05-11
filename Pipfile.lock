@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b52e8aafb270e090ec30937d44cbf6492edfb34a46baa16a559c5511909b4c0d"
+            "sha256": "c50f7ae71802c9438e9c43761f0d25d55d8c2b57104aeada6f04b1e2fd929473"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -246,6 +246,13 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==8.2.0"
+        },
+        "piwikapi": {
+            "hashes": [
+                "sha256:cdd80c48450336911f28f0828167d7f7f33cc20e2f358d7160457c89432d37a5"
+            ],
+            "index": "pypi",
+            "version": "==0.3"
         },
         "plotly": {
             "hashes": [

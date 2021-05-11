@@ -2,7 +2,16 @@
 <h1>Matomo</h1>
 <form method="POST">
   {% csrf_token %}
-  <input type="text" placeholder="Date" name="date" />
+  <p>
+    <select name="method">
+      <option value="VisitTime.getVisitInformationPerLocalTime">
+        Number of Visitor per Hour
+      </option>
+    </select>
+  </p>
+  <p>
+    <input type="text" placeholder="Date" name="date" />
+  </p>
   <button type="submit">Plot</button>
 </form>
 {{df}} {% endblock %}

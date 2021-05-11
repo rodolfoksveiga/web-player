@@ -12,6 +12,7 @@ django-analytical = "*"
 pandas = "*"
 matplotlib = "*"
 plotly = "*"
+piwikapi = "*"
 
 [dev-packages]
 
