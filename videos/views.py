@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 import requests
 import vimeo
 
 from .models import Video
 from .forms import VideoForm
+
 
 def videos_view(request, *args, **kwargs):
     queryset = Video.objects.all()
@@ -11,6 +13,7 @@ def videos_view(request, *args, **kwargs):
         'obj_list': queryset
     }
     return render(request, 'video/videos.html', context)
+
 
 def play_video_view(request, id):
     client = vimeo.VimeoClient(
@@ -31,7 +34,7 @@ def play_video_view(request, id):
         print(token)
     except:
         print('BAD!')
-    
+
     # get video's iframe
     # response = client.get('/videos/538327228')
     # iframe = response.json().get('embed').get('html')
@@ -52,6 +55,8 @@ def play_video_view(request, id):
     }
     return render(request, 'video/play_video.html', context)
 
+
+@login_required(login_url='login')
 def create_video_view(request, *args, **kwargs):
     form = VideoForm(request.POST or None)
     if form.is_valid():
@@ -62,6 +67,8 @@ def create_video_view(request, *args, **kwargs):
     }
     return render(request, 'video/create_video.html', context)
 
+
+@login_required(login_url='login')
 def update_video_view(request, id, *args, **kwargs):
     obj = get_object_or_404(Video, id=id)
     values = {
@@ -77,6 +84,8 @@ def update_video_view(request, id, *args, **kwargs):
     }
     return render(request, 'video/update_video.html', context)
 
+
+@login_required(login_url='login')
 def delete_video_view(request, id, *args, **kwargs):
     obj = get_object_or_404(Video, id=id)
     if request.method == 'POST':

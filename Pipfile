@@ -8,6 +8,7 @@ django = "*"
 django-embed-video = "*"
 gunicorn = "*"
 pyvimeo = "*"
+django-analytical = "*"
 
 [dev-packages]
 
