@@ -2,12 +2,18 @@
 <h1>Matomo</h1>
 <form method="POST">
   {% csrf_token %}
-  <input type="text" placeholder="Date" name="date" />
+  <p>
+    <input type="text" placeholder="Date" name="date" />
+  </p>
+  <p>
+    <select name="color">
+      <option value="noColor">No Color</option>
+      <option value="browserName">Browser</option>
+      <option value="city">City</option>
+    </select>
+  </p>
   <button type="submit">Plot</button>
 </form>
-<h2>Fetch Image from Matomo</h2>
-<h3>Browser Usage (Previous 30 Days)</h3>
-<img src="{{image}}" />
 <h2>Fetch Data from Matomo</h2>
 <h3>Number of Unique Visitors per Day</h3>
 <div>{{graph|safe}}</div>

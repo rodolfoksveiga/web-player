@@ -3,15 +3,15 @@
 <form method="POST">
   {% csrf_token %}
   <p>
-    <select name="method">
-      <option value="VisitTime.getVisitInformationPerLocalTime">
-        Number of Visitor per Hour
-      </option>
-    </select>
+    <input type="text" placeholder="Date" name="date" />
   </p>
   <p>
-    <input type="text" placeholder="Date" name="date" />
+    <select name="color">
+      <option value="noColor">No Color</option>
+      <option value="browserName">Browser</option>
+      <option value="city">City</option>
+    </select>
   </p>
   <button type="submit">Plot</button>
 </form>
-{{df}} {% endblock %}
+{% endblock %}

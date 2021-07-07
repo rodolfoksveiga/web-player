@@ -13,6 +13,8 @@ pandas = "*"
 matplotlib = "*"
 plotly = "*"
 piwikapi = "*"
+django-fluent-contents = "*"
+cmsplugin-iframe = "*"
 
 [dev-packages]
 
